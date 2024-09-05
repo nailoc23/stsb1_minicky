@@ -36,7 +36,7 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 </head>
-   
+
 <body>
 
   <!-- ======= Header ======= -->
@@ -80,89 +80,61 @@
     </div>
   </header><!-- End Header -->
 
-  <main id="main">
+<main id="main">
 
-    <!-- ======= Breadcrumbs ======= -->
-    <section id="breadcrumbs" class="breadcrumbs">
-      <div class="container">
-
-        <ol>
-          <li><a href="index.html">Customer Center</a></li>
-          <li>공지사항</li>
-        </ol>
-        <h2>공지사항</h2>
-
-      </div>
-    </section><!-- End Breadcrumbs -->
-
-    <section class="inner-page">
-  	<div class="container">
-    <h2>공지사항 목록</h2>
-    
-    <!-- 검색창 -->
-    <div class="input-group mb-3">
-       <input type="text" class="form-control" placeholder="검색어 입력" value="" id="searchWord">
-       <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" id="searchBtn">검색</button>
-       </div>
+  <!-- ======= Breadcrumbs ======= -->
+  <section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+      <ol>
+        <li><a href="index.html">Customer Center</a></li>
+        <li><a href="boardlist.jsp">공지사항</a></li>
+        <li>글수정</li>
+      </ol>
+      <h2>공지사항</h2>
     </div>
-    
-    <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성일</th>
-            <th>조회수</th>
-          </tr>
-        </thead>
-        <tbody>
-        
-		<!-- <tr>
-			<td colspan="5" align="center">게시물이 없습니다
-			</td>
-		</tr> -->
-	 	        
-	        <tr>
-            <td><%= boardvo.getNum() %></td>
-            <td><a href="boardview.jsp?num=<%= boardvo.getNum() %>"><%= boardvo.getSubject() %></a></td>
-            <td><%= boardvo.getName() %></td>
-            <td><%= boardvo.getRegdate() %></td>
-            <td><%= boardvo.getHit() %></td>
-          </tr>
-          
-        
-          <!-- 추가적인 게시글 행을 이곳에 추가합니다 -->
-        </tbody>
-      </table>
+  </section><!-- End Breadcrumbs -->
+
+  <section class="inner-page">
+    <div class="container">
+      <h2>글수정</h2>
+
+      <form action="boardmodpro.jsp" method="post"> <!-- enctype="multipart/form-data" -->
+        <input type="hidden" name="num" value="">
+        <div class="form-group">
+          <label for="name">작성자</label>
+          <input type="text" class="form-control" id="name" name="name" value="" placeholder="작성자 이름" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">이메일</label>
+          <input type="email" class="form-control" id="email" name="email" value="" placeholder="이메일">
+        </div>
+
+        <div class="form-group">
+          <label for="subject">제목</label>
+          <input type="text" class="form-control" id="subject" name="subject" value="" placeholder="제목" required>
+        </div>
+
+        <div class="form-group">
+          <label for="content">내용</label>
+          <textarea class="form-control" id="content" name="content" rows="5" placeholder="내용을 입력하세요" required></textarea>
+        </div>
+
+		<!-- 
+        <div class="form-group">
+          <label for="file">첨부파일</label>
+          <input type="file" class="form-control-file" id="file" name="file">
+        </div>
+ 		-->
+        <div class="text-right mt-3">
+          <button type="submit" class="btn btn-primary">수정하기</button>
+          <a href="boardview.jsp?num=<%= num %>" class="btn btn-secondary">취소</a>
+        </div>
+      </form>
     </div>
-    
-	    <div class="container mt-3">
-		  <div class="input-group mb-3">
-		    <div class="ml-auto">
-		      <a href="boardreg" class="btn btn-primary regBtn">글쓰기</a>
-		    </div>
-		  </div>
-		</div>
-    
-	    <nav aria-label="Page navigation example">
-	      <ul class="pagination justify-content-center">
-	        <li class="page-item"><a class="page-link" href="boardlist.jsp?page=1">Previous</a></li>
-	       
-	        
-	        <li class="page-item"><a class="page-link" href="boardlist.jsp?page=<%=p%>"><%=p%></a></li>
-	              
-	        
-	        <li class="page-item"><a class="page-link" href="boardlist.jsp?page=<%=pageCnt%>">Next</a></li>
-	      </ul>
-	    </nav>
-  	</div>
-</section>
+  </section>
 
-
-  </main><!-- End #main -->
+</main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
   <footer id="footer">

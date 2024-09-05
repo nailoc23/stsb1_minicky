@@ -8,6 +8,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class MemberController {
 	
 	/*
+	 * withdraw
+	 */
+	@GetMapping("/withdraw")
+	public String withdraw() {
+		return "withdraw";
+	}
+	
+	/*
+	 * memupform
+	 */
+	@GetMapping("/memupdate")
+	public String memupdate() {
+		return "memupdate";
+	}
+	
+	/*
 	 * loginform
 	 */
 	@GetMapping("/login")
