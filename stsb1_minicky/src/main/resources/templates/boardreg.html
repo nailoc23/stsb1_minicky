@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="utf-8">
@@ -49,14 +49,14 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto active" href="/">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
           <li><a class="nav-link scrollto" href="#services">Services</a></li>
           <li><a class="nav-link   scrollto" href="#portfolio">Smart Shop</a></li>
           <li><a class="nav-link scrollto" href="#team">Consultant</a></li>
-          <li class="dropdown"><a href="#"><span>Customer Center</span> <i class="bi bi-chevron-down"></i></a>
+          <li class="dropdown"><a href="boardlist"><span>Customer Center</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="boardlist.jsp">공지사항</a></li>              
+              <li><a href="boardlist">공지사항</a></li>              
               <li><a href="#">News</a></li>
               <li><a href="#">포토갤러리</a></li>
               <li><a href="#">자료실</a></li>
@@ -64,12 +64,14 @@
           </li>
           <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="regform.jsp">회원가입</a></li>              
-              <li><a href="loginform.jsp">로그인</a></li>
+              <li><a href="reg">회원가입</a></li>              
+              <li th:if="${session.loginUser == null}"><a href="login">로그인</a></li>
+        	  <li th:if="${session.loginUser != null}"><a href="logout">로그아웃</a></li>
               <li><a href="#">ID/PW찾기</a></li>
-              <li><a href="memupform.jsp">회원정보수정</a></li>
-              <li><a href="withdraw.jsp">회원탈퇴</a></li>
-              <li><a href="#">주문목록</a></li>
+              <li><a href="memupdate">회원정보수정</a></li>
+              <li><a href="withdraw">회원탈퇴</a></li>
+              <li><a href="#">장바구니</a></li>
+              <li><a href="orderlist">주문목록</a></li>
             </ul>
           </li>
           <li><a class="getstarted scrollto" href="#about">Get Started</a></li>
@@ -87,7 +89,7 @@
     <div class="container">
       <ol>
         <li><a href="index.html">Customer Center</a></li>
-        <li><a href="boardlist.jsp">공지사항</a></li>
+        <li><a href="boardlist">공지사항</a></li>
         <li>글쓰기</li>
       </ol>
       <h2>공지사항</h2>
@@ -98,7 +100,7 @@
     <div class="container">
       <h2>글쓰기</h2>
 
-      <form action="boardregpro.jsp" method="post"> <!-- enctype="multipart/form-data" -->
+      <form action="boardreg" method="post"> <!-- enctype="multipart/form-data" -->
         <div class="form-group">
           <label for="name">작성자</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="작성자 이름" required>
@@ -127,7 +129,7 @@
  		-->
         <div class="text-right mt-3">
           <button type="submit" class="btn btn-primary">작성하기</button>
-          <a href="boardlist.jsp" class="btn btn-secondary">취소</a>
+          <a href="javascript:history.back();" class="btn btn-secondary">취소</a>
         </div>
       </form>
     </div>

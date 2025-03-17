@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 목록</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        /* 상단 네비게이션 바 스타일 */
+        .navbar {
+            background: #333;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar ul li {
+            margin: 0 15px;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .navbar ul li a:hover {
+            background: #555;
+        }
+        
+
+        h2 {
+            text-align: center;
+        }
+
+        .product-table {
+            width: 100%;
+            max-width: 900px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-table th, .product-table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .product-table th {
+            background: #007bff;
+            color: white;
+        }
+
+        .product-table img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        
+        /* 등록 버튼 스타일 */
+        .register-btn, .modify-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .register-btn:hover {
+            background: #218838;
+        }
+        
+        /* 반응형 메뉴 */
+        @media (max-width: 600px) {
+            .navbar ul {
+                flex-direction: column;
+            }
+            .navbar ul li {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+	<nav class="navbar">
+        <ul>
+            <li><a href="admprdlist">상품 목록</a></li>
+            <li><a href="userlist">사용자 목록</a></li>
+            <li><a href="admorderlist">주문 목록</a></li>
+            <li><a href="admlogout">로그아웃</a></li>
+        </ul>
+    </nav>
+    
+    <h2>상품 목록</h2>
+
+    <table class="product-table">
+        <thead>
+            <tr>
+            	<th>선택</th>
+                <th>상품 ID</th>
+                <th>상품 이미지</th>
+                <th>상품명</th>
+                <th>분류</th>
+                <th>가격</th>
+                <th>재고</th>
+                <th>등록 날짜</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="product : ${products}">
+            	<th><input type="radio" name="selprd" th:value="${product.product_id}"></th>
+                <td th:text="${product.product_id}">1001</td>
+                <td>
+                <!-- <img src="assets/img/thumb_no_prdimg.png" alt="상품이미지"> -->
+                <!-- 이미지가 있는 경우 -->
+				<img th:if="${product.file_path != null and product.file_path != ''}" 
+				     th:src="@{${product.file_path}}" 
+				     alt="상품이미지">
+				
+				<!-- 이미지가 없는 경우 -->
+				<img th:unless="${product.file_path != null and product.file_path != ''}" 
+				     src="assets/img/thumb_no_prdimg.png" 
+				     alt="이미지 없음">
+                </td>
+                <td th:text="${product.name}">노트북</td>
+                <td th:text="${product.category}">전자기기</td>
+                <td th:text="${product.price}">₩1,500,000</td>
+                <td th:text="${product.stock}">25</td>
+                <td th:text="${product.regdate}">2025-02-10</td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+    <!-- 등록 버튼 -->
+    <h2>
+    <a href="admprdreg" class="register-btn">상품 등록</a>
+    <a href="admprdmod" class="modify-btn">상품 수정</a>
+    </h2>
+
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".modify-btn").click(function (event) {
+            event.preventDefault(); // 기본 링크 이동 방지
+
+            // 선택된 라디오 버튼의 값 (product_id)
+            var selectedProduct = $("input[name='selprd']:checked").val();
+
+            if (!selectedProduct) {
+                alert("상품을 선택하세요.");
+                return;
+            }
+
+            // 상품 수정 페이지로 이동 (pid 파라미터 추가)
+            window.location.href = "admprdmod?pid=" + selectedProduct;
+        });
+    });
+</script>
+</body>
+
+</html>

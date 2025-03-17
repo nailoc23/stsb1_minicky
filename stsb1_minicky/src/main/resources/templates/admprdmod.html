@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 수정</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+           /*  display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; */
+        }
+        
+        /* 상단 네비게이션 바 스타일 */
+        .navbar {
+            background: #333;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar ul li {
+            margin: 0 15px;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .navbar ul li a:hover {
+            background: #555;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: #0056b3;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* 반응형 메뉴 */
+        @media (max-width: 600px) {
+            .navbar ul {
+                flex-direction: column;
+            }
+            .navbar ul li {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+	<!-- 네비바 메뉴 -->
+	<nav class="navbar">
+        <ul>
+            <li><a href="admprdlist">상품 목록</a></li>
+            <li><a href="userlist">사용자 목록</a></li>
+            <li><a href="admorderlist">주문 목록</a></li>
+            <li><a href="admlogout">로그아웃</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <h2>상품 수정</h2>
+        <!-- <form action="admprdreg_ok" method="POST"> -->
+            <div class="form-group">
+                <label for="product_id">상품 ID</label>
+                <input th:value="${product.product_id}" type="text" id="product_id" name="product_id" disabled="disabled">
+            </div>
+
+            <div class="form-group">
+                <label for="product_name">상품명</label>
+                <input th:value="${product.name}" type="text" id="product_name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="category">상품 분류</label>
+                <select id="category" name="category" required>
+                    <option value="">선택하세요</option>
+                    <option value="electric" th:selected="${product.category == 'electric'}">전자제품</option>
+        <option value="book" th:selected="${product.category == 'book'}">도서</option>
+        <option value="tool" th:selected="${product.category == 'tool'}">전기도구</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="price">가격 (₩)</label>
+                <input th:value="${#numbers.formatInteger(product.price, 1)}" type="number" id="price" name="price" required>
+            </div>
+
+            <div class="form-group">
+                <label for="stock">재고 수량</label>
+                <input th:value="${product.stock}" type="number" id="stock" name="stock" required>
+            </div>
+            
+            <!-- 이미지 업로드 필드 추가 -->
+	        <div class="form-group">
+	            <label for="product_image">상품 이미지</label>
+	            <input type="file" id="product_image" name="product_image" accept="image/*" required>
+	        </div>
+	        
+	        <!-- 기존 첨부 파일 표시 -->
+		    <div class="form-group">
+		        <label>현재 첨부파일</label>
+		        <table class="table table-bordered">
+		            <thead>
+		                <tr>
+		                    <th>이미지</th>
+		                    <th>파일명</th>
+		                    <th>삭제여부</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		                <tr th:if="${product.file_path != null and product.origin_name != 'default.jpg'}">		             
+		                    <td>
+		                        <img th:src="@{${product.file_path}}" alt="첨부된 이미지" width="100">
+		                        <input type="hidden" th:value="${product.file_path}" name="file_path" id="file_path">
+		                    </td>	                    
+		                    <td th:text="${product.origin_name}"></td>
+		                    <td>
+		                        <input type="checkbox" id="deleteFile" name="deleteFile" value="no">
+		                    </td>		                    
+		                </tr>
+		                <tr th:if="${product.file_path == null or product.origin_name == 'default.jpg'}">
+		                    <td colspan="3" class="text-center">첨부된 파일 없음</td>
+		                </tr>
+		            </tbody>
+		        </table>
+		       
+		    </div>
+
+            <button type="submit" class="btn-submit" id="btn">수정하기</button>
+        <!-- </form> -->
+        
+        <a href="admprdlist" class="back-link">상품 목록으로 돌아가기</a>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+	<script>
+		
+        // 체크박스 유무 확인
+	    let deleteFileCheckbox = null
+	    document.addEventListener("DOMContentLoaded", function () {
+	        deleteFileCheckbox = document.getElementById("deleteFile");
+
+		    // 체크박스가 존재하는지 확인
+		    if (deleteFileCheckbox) {
+		        deleteFileCheckbox.addEventListener("change", function () {
+		            let deleteInput = document.querySelector("input[name='deleteFile']");
+		            if (deleteInput) {
+		                deleteInput.value = this.checked ? "yes" : "no";
+		                console.log('체크박스값: ' + deleteInput.value);
+		            }
+		        });
+		    }
+	    });
+	
+		$("#btn").click(()=>{
+			//alert(1111);
+			// 수정하기 위해 선택한 상품_Id
+			var product_id=$("#product_id").val();
+			//사용자가 입력한 값
+			var name=$("#product_name").val();
+			var category=$("#category").val();
+			var price=$("#price").val();
+			var stock=$("#stock").val();
+			
+			//파일삭제여부
+			var deleteFile=$("#deleteFile").val();
+			var file_path=$("#file_path").val();
+			//파일데이터 추출
+			var file=$("#product_image");
+			console.log(file[0]);//순수한 태그
+			console.dir(file[0].files[0]); //파일데이터
+			
+			
+			//폼태그로 추가
+			var formData = new FormData(); //폼객체
+			
+			formData.append("product_id",product_id); //name,값
+			formData.append("name",name); //name,값
+			formData.append("category",category); //category,값
+			formData.append("price",price); //price,값
+			formData.append("stock",stock); //stock,값
+			
+			// 체크박스가 존재하는지 확인
+		    if (deleteFileCheckbox) {
+				formData.append("deleteFile", deleteFile); //삭제여부체크,값
+				formData.append("file_path", file_path); //첨부파일경로,값				
+		    }
+		    formData.append("file",file[0].files[0]); //name, 값
+			
+			// 콘솔 로그 확인
+	        console.log([...formData]); // 폼 데이터 내용 확인
+	        
+	        $.ajax({
+				url:"uploadPrdMod_ok",
+				type:"post",
+				data:formData, //보내는데이터 form
+				contentType:false, //보내는데이터타입 false->"multipart/form-data"로 선언됩니다.
+				processData:false, //폼데이터가 name=값&name=값 형식으로 자동변경되는 것을 막아줍니다.
+				success:(result)=>{ //콜백
+					if(result=="success"){
+						alert("업로드가 완료되었습니다.");
+						location.reload(); // 화면 새로고침
+					}
+				},
+				error:(err)=>{
+					alert("업로드 에러발생");
+				}
+				
+			})
+			
+		})
+		
+	</script>
+
+</body>
+
+</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="utf-8">
@@ -43,20 +43,20 @@
   <header id="header" class="fixed-top header-inner-pages">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="index.jsp">MINI COOKIE</a></h1>
+      <h1 class="logo me-auto"><a href="/">MINI COOKIE</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto active" href="/">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
           <li><a class="nav-link scrollto" href="#services">Services</a></li>
           <li><a class="nav-link   scrollto" href="#portfolio">Smart Shop</a></li>
           <li><a class="nav-link scrollto" href="#team">Consultant</a></li>
-          <li class="dropdown"><a href="#"><span>Customer Center</span> <i class="bi bi-chevron-down"></i></a>
+          <li class="dropdown"><a href="boardlist"><span>Customer Center</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="boardlist.jsp">공지사항</a></li>              
+              <li><a href="boardlist">공지사항</a></li>              
               <li><a href="#">News</a></li>
               <li><a href="#">포토갤러리</a></li>
               <li><a href="#">자료실</a></li>
@@ -64,12 +64,14 @@
           </li>
           <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="regform.jsp">회원가입</a></li>              
-              <li><a href="loginform.jsp">로그인</a></li>
+              <li><a href="reg">회원가입</a></li>              
+              <li th:if="${session.loginUser == null}"><a href="login">로그인</a></li>
+        	  <li th:if="${session.loginUser != null}"><a href="logout">로그아웃</a></li>
               <li><a href="#">ID/PW찾기</a></li>
-              <li><a href="memupform.jsp">회원정보수정</a></li>
-              <li><a href="withdraw.jsp">회원탈퇴</a></li>
-              <li><a href="#">주문목록</a></li>
+              <li><a href="memupdate">회원정보수정</a></li>
+              <li><a href="withdraw">회원탈퇴</a></li>
+              <li><a href="#">장바구니</a></li>
+              <li><a href="orderlist">주문목록</a></li>
             </ul>
           </li>
           <li><a class="getstarted scrollto" href="#about">Get Started</a></li>
@@ -87,7 +89,7 @@
     <div class="container">
       <ol>
         <li><a href="index.html">Customer Center</a></li>
-        <li><a href="boardlist.jsp">공지사항</a></li>
+        <li><a href="boardlist">공지사항</a></li>
         <li>글읽기</li>
       </ol>
       <h2>공지사항</h2>
@@ -100,21 +102,20 @@
 
       <div class="card mb-4">
         <div class="card-body">
-          <h5 class="card-title">제목: <%= boardVo.getSubject() %></h5>
-          <h6 class="card-subtitle mb-2 text-muted">작성자: <%= boardVo.getName() %></h6>
-          <h6 class="card-subtitle mb-2 text-muted">작성일: <%= boardVo.getRegdate() %></h6>
-          <h6 class="card-subtitle mb-2 text-muted">이메일: <%= boardVo.getEmail() %></h6>
-          <h6 class="card-subtitle mb-2 text-muted">조회수: <%= boardVo.getHit() %></h6>
-          <p class="card-text mt-4">
-          <%= boardVo.getContent() %>
+          <h5 class="card-title" th:text="'제목: ' + ${board.subject}"></h5>
+          <h6 class="card-subtitle mb-2 text-muted" th:text="'작성자: ' + ${board.name}"></h6>
+          <h6 class="card-subtitle mb-2 text-muted" th:text="'작성일 ' + ${board.regdate}"></h6>
+          <h6 class="card-subtitle mb-2 text-muted" th:text="'이메일 ' + ${board.email}"></h6>
+          <h6 class="card-subtitle mb-2 text-muted" th:text="'조회수 ' + ${board.hit}"></h6>
+          <p class="card-text mt-4"  th:text="${board.content}">          
           </p>
         </div>
       </div>
 
       <div class="text-right">
-        <a href="boardlist.jsp" class="btn btn-secondary">목록으로</a>
-        <a href="boardmodform.jsp?num=<%= boardVo.getNum() %>" class="btn btn-secondary">수정</a>
-        <a href="boardremve.jsp?num=<%= boardVo.getNum() %>" class="btn btn-secondary">삭제</a>
+        <a href="boardlist" class="btn btn-secondary">목록으로</a>
+        <a th:href="@{boardmod?(num=${board.num}) }" class="btn btn-secondary">수정</a>
+        <a th:href="@{boardremove?(num=${board.num}) }" class="btn btn-secondary">삭제</a>
       </div>
 
     </div>

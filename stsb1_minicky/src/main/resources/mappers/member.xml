@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- mapper DTD 선언 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- SQL Mapping -->
+<mapper namespace="MemberDao">
+	
+	<select id="selectMemberById" parameterType="java.lang.String" resultType="com.touzone.stsb.vo.MemberVo">
+		SELECT * FROM members WHERE memid=#{id}
+	</select>
+	
+	<insert id="insertMember" parameterType="com.touzone.stsb.vo.MemberVo">
+		INSERT INTO members 
+			(memid, name, email, password, phone, regdate, status) 
+			VALUES 
+			(#{memid}, #{name}, #{email}, #{password}, #{phone}, now(), 'active')
+	</insert>
+	
+	<select id="selectMemberByIdPw" parameterType="map" resultType="java.lang.Integer">
+		SELECT count(memid) as cnt FROM members WHERE memid=#{memid} and password=#{password}
+	</select>
+	
+</mapper>

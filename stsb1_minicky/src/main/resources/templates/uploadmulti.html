@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h3>비동기형식의 업로드</h3>
+	<div>
+		<input type="file" name="file" class="file-input"/><br/>
+	    <input type="file" name="file" class="file-input"/><br/>
+	    <input type="file" name="file" class="file-input"/><br/>
+		<input type="text" name="writer" id="writer"/>
+		<input type="button" value="업로드" id="btn"/><br/>
+	</div>
+	
+	<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+	<script>
+		$("#btn").click(()=>{
+			//파일데이터 추출
+			//var file=$("#a");
+			//console.log(file[0]);//순수한 태그
+			//console.dir(file[0].files[0]); //파일데이터
+			
+			//사용자가 입력 text
+			var writer=$("#writer").val();
+			
+			//폼태그로 추가
+			var formData = new FormData(); //폼객체
+			 // 모든 파일 입력 필드에서 파일 데이터 추가
+	        $(".file-input").each(function(index, fileInput) {
+	            var files = fileInput.files; // 선택된 파일 목록
+	            if (files.length > 0) {
+	                formData.append("file", files[0]); // 각 파일 추가
+	            }
+	        });
+			//formData.append("file",file[0].files[0]); //name, 값
+			formData.append("writer",writer); //name,값
+			
+			// 콘솔 로그 확인
+	        console.log([...formData]); // 폼 데이터 내용 확인
+			
+	        
+			$.ajax({
+				url:"uploadmulti_ok",
+				type:"post",
+				data:formData, //보내는데이터 form
+				contentType:false, //보내는데이터타입 false->"multipart/form-data"로 선언됩니다.
+				processData:false, //폼데이터가 name=값&name=값 형식으로 자동변경되는 것을 막아줍니다.
+				success:(result)=>{ //콜백
+					if(result=="success"){
+						alert("업로드가 완료되었습니다.");
+					}
+				},
+				error:(err)=>{
+					alert("업로드 에러발생");
+				}
+				
+			})
+			
+		})
+	
+	</script>
+</body>
+</html>

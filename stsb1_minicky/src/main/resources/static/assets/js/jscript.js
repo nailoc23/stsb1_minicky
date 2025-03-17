@@ -6,7 +6,8 @@ $('#login').click(function(){
  
 document.getElementById("login").addEventListener("click", function(event) {
     // Get the values of the userid and userpw fields
-    var userid = document.getElementById("userid").value;
+    // alert("로그인폼 확인"")
+    var userid = document.getElementById("memid").value;
     var userpw = document.getElementById("userpw").value;
     
  	// Initialize a variable to track validation status
@@ -43,7 +44,7 @@ $('#regmem').click(function(){
 // check duplicate userid
 function checkDuplicate() {
     // Get the user ID from the input field
-    var userId = document.getElementById("userid").value;
+    var userId = document.getElementById("memid").value;
     var messageElement = document.getElementById("useridHelp");
     
     // Check userid

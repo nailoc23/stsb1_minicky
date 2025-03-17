@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- mapper DTD 선언 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- SQL Mapping -->
+<mapper namespace="BoardDao">
+			
+ 	<select id="selectBoardCnt" resultType="java.lang.Integer">
+ 		SELECT count(*) as cnt FROM boards
+ 	</select>
+ 	
+ 	<select id="selectBoardList" parameterType="map" resultType="com.touzone.stsb.vo.BoardVo">
+ 		SELECT * FROM boards order by regdate desc LIMIT #{offset}, 10
+ 	</select>
+ 	
+ 	<select id="selectBoardByNum" parameterType="java.lang.Integer" resultType="com.touzone.stsb.vo.BoardVo">
+ 		SELECT * FROM boards WHERE num=#{num}
+ 	</select>
+ 	
+ 	<update id="updateBoard" parameterType="com.touzone.stsb.vo.BoardVo">
+ 		UPDATE boards SET subject=#{subject}, name=#{name}, email=#{email}, content=#{content}
+ 			WHERE num=#{num}
+ 	</update>
+ 	
+ 	<delete id="deleteBoardByNum" parameterType="java.lang.Integer">
+ 		DELETE FROM boards WHERE num=#{num};
+ 	</delete>
+ 	
+ 	<insert id="insertBoard" parameterType="com.touzone.stsb.vo.BoardVo">
+ 		INSERT INTO boards
+		(num, botype, group_num, name, subject, 
+		 content, email, regdate) values
+		(( SELECT MAX(num)+1 FROM boards as num ), 'notice', num, #{name}, #{subject}, 
+		 #{content}, #{email}, now() )
+ 	</insert>
+ 	
+</mapper> 	

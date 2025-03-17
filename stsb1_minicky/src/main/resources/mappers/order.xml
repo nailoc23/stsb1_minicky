@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- mapper DTD 선언 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- SQL Mapping -->
+<mapper namespace="OrderDao">  
+
+	<select id="OrderDao.selectOrderList" parameterType="java.lang.String"  resultType="com.touzone.stsb.vo.OrderVo">
+		SELECT 
+		    o.order_id,
+		    od.order_detail_id,
+		    o.order_date,
+		    p.name,
+		    od.quantity,
+		    od.subtotal,
+		    o.order_status
+		FROM orders o
+		JOIN order_details od ON o.order_id = od.order_id
+		JOIN products p ON od.product_id = p.product_id
+		WHERE memid=#{memid}
+		ORDER BY o.order_date DESC
+	</select>
+	
+	<select id="selectNewOrderId" resultType="java.lang.Integer">
+		SELECT IFNULL(MAX(order_id), 0) + 1 as order_id FROM orders
+	</select>
+	
+	<insert id="insertOrder" parameterType="com.touzone.stsb.vo.OrderVo">
+		INSERT INTO orders 
+		(order_id, 
+	     memid, total_price, order_status, order_date) 
+		VALUES 
+		(( SELECT IFNULL(MAX(order_id), 0) + 1 AS order_id FROM orders as o), 
+		 #{memid}, #{total_price}, #{order_status}, now());
+	</insert>
+
+</mapper>

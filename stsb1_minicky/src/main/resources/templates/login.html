@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="utf-8">
@@ -43,20 +43,20 @@
   <header id="header" class="fixed-top header-inner-pages">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="index.jsp">Mini Cookie</a></h1>
+      <h1 class="logo me-auto"><a href="/">Mini Cookie</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto active" href="/">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
           <li><a class="nav-link scrollto" href="#services">Services</a></li>
           <li><a class="nav-link   scrollto" href="#portfolio">Smart Shop</a></li>
           <li><a class="nav-link scrollto" href="#team">Consultant</a></li>
           <li class="dropdown"><a href="boardlist.jsp"><span>Customer Center</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="boardlist.jsp">공지사항</a></li>        
+              <li><a href="boardlist">공지사항</a></li>        
               <li><a href="#">News</a></li>
               <li><a href="#">포토갤러리</a></li>
               <li><a href="#">자료실</a></li>
@@ -64,12 +64,14 @@
           </li>
           <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="regform.jsp">회원가입</a></li>              
-              <li><a href="loginform.jsp">로그인</a></li>
+              <li><a href="reg">회원가입</a></li>              
+              <li th:if="${session.loginUser == null}"><a href="login">로그인</a></li>
+        	  <li th:if="${session.loginUser != null}"><a href="logout">로그아웃</a></li>
               <li><a href="#">ID/PW찾기</a></li>
-              <li><a href="memupform.jsp">회원정보수정</a></li>
-              <li><a href="withdraw.jsp">회원탈퇴</a></li>
-              <li><a href="#">주문목록</a></li>
+              <li><a href="memupdate">회원정보수정</a></li>
+              <li><a href="withdraw">회원탈퇴</a></li>
+              <li><a href="#">장바구니</a></li>
+              <li><a href="orderlist">주문목록</a></li>
             </ul>
           </li>
           <li><a class="getstarted scrollto" href="#about">Get Started</a></li>
@@ -87,7 +89,7 @@
       <div class="container">
 
         <ol>
-          <li><a href="index.html">My Page</a></li>
+          <li><a href="#">My Page</a></li>
           <li>로그인</li>
         </ol>
         <h2>로그인</h2>
@@ -100,14 +102,14 @@
         <div class="row justify-content-center">
           <div class="col-lg-6">
             <h2>Login</h2>
-            <form action="login" method="post" role="form" class="php-email-form">
+            <form action="login" method="post" class="php-email-form"> <!--  role="form" class="php-email-form" -->
               <div class="form-group">
                 <label for="username">사용자 아이디</label>                
-                <input type="text" name="userid" class="form-control" id="userid" placeholder="사용자아이디를 입력하시오" required>                
+                <input type="text" name="memid" class="form-control" id="memid" placeholder="사용자아이디를 입력하시오" required>                
               </div>
               <div class="form-group mt-3">
                 <label for="password">사용자 비밀번호</label>
-                <input type="password" class="form-control" name="userpw" id="userpw" placeholder="사용자비밀번호를 입력하시오" required>
+                <input type="password" class="form-control" name="password" id="userpw" placeholder="사용자비밀번호를 입력하시오" required>
               </div>
               <div class="text-center mt-4">
                 <button type="button" class="btn btn-primary" id="login">로그인</button>
@@ -205,7 +207,7 @@
         <!-- You can delete the links only if you purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        Designed by <a href="./admlogin" target="_blank">Administrator</a>
       </div>
     </div>
   </footer><!-- End Footer -->

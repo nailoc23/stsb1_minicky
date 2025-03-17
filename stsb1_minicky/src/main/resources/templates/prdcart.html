@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>MINI SEED</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  
+</head>
+
+<body>
+
+
+  
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top header-inner-pages">
+    <div class="container d-flex align-items-center">
+
+      <h1 class="logo me-auto"><a href="/">MINI SEED</h1></a>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li><a class="nav-link scrollto" href="#services">Services</a></li>
+          <li><a class="nav-link scrollto" href="#portfolio">Smart Shop</a></li>
+          <li><a class="nav-link scrollto" href="#team">Consultant</a></li>
+          <li class="dropdown"><a href="boardlist"><span>Customer Center</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="boardlist">공지사항</a></li>              
+              <li><a href="#">News</a></li>
+              <li><a href="#">포토갤러리</a></li>
+              <li><a href="#">자료실</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="reg">회원가입</a></li>              
+              <li th:if="${session.loginUser == null}"><a href="login">로그인</a></li>
+        	  <li th:if="${session.loginUser != null}"><a href="logout">로그아웃</a></li>
+              <li><a href="#">ID/PW찾기</a></li>
+              <li><a href="memupdate">회원정보수정</a></li>
+              <li><a href="withdraw">회원탈퇴</a></li>
+              <li><a href="#">장바구니</a></li>
+              <li><a href="orderlist">주문목록</a></li>
+            </ul>
+          </li>
+          <li><a class="getstarted scrollto" href="#about">Get Started</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+
+        <ol>
+          <li><a href="index.html">MyPage</a></li>
+          <li>장바구니</li>
+        </ol>
+        <h2>장바구니</h2>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+	    
+	    <div class="container">
+	    
+		    <h2 class="text-center mb-4">🛒 장바구니</h2>
+		
+		    <div class="table-responsive">
+		      <table class="table table-striped">
+		        <thead>
+		          <tr>
+		            <th>상품번호</th>
+		            <th>상품명</th>
+		            <th>가격</th>
+		            <th>수량</th>
+		            <th>합계</th>
+		            <th>삭제</th>
+		          </tr>
+		        </thead>
+		        <tbody id="cart-items"></tbody>
+		        
+		        
+		      </table>
+		    </div>
+		
+		    <div class="text-end">
+		      <h4>총 금액: <span id="total-price">0</span> 원</h4>
+		      <a href="javascript:void(0);" onclick="window.history.back()" class="btn btn-primary btn-lg">계속쇼핑하기</a>
+		      <a href="javascript:void(0);" class="btn btn-primary btn-lg" id="orderBasket">주문하기</a>
+		    </div>
+		</div>  
+	</section>
+  </main>
+  
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <div class="footer-newsletter">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <h4>Join Our Newsletter</h4>
+            <p>우리의 뉴스레터에 가입하여 최신 소식과 특별 혜택을 받아보세요!</p>
+            <form action="" method="post">
+              <input type="email" name="email"><input type="submit" value="Subscribe">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h3>MINI SEED</h3>
+            <p>
+              서울 특별시 종로구  <br>
+              우정국로2길 21 <br>
+              대왕빌딩 9층 <br><br>
+              <strong>사업자등록번호:</strong> 778-85-00778<br>
+              <strong>Email:</strong> info@miniseed.co.kr<br>
+            </p>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Consulting</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">AIoT Solution</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Our Social Networks</h4>
+            <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
+            <div class="social-links mt-3">
+              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+              <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom clearfix">
+      <div class="copyright">
+        &copy; Copyright <strong><span>MINI SEED</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/ -->
+        Designed by <a href="./admlogin" target="_blank">Administrator</a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+  
+<script>
+	document.addEventListener("DOMContentLoaded", renderCart);
+	
+	function renderCart() {
+	    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+	    let cartTable = document.getElementById("cart-items");
+	    let totalPriceElement = document.getElementById("total-price");
+	    let totalPrice = 0; // 전체 합계 초기화
+	
+	    cartTable.innerHTML = ""; // 기존 테이블 초기화
+	
+	    if (cart.length === 0) {
+	        cartTable.innerHTML = "<tr><td colspan='6'>장바구니가 비었습니다.</td></tr>";
+	    } else {
+	        cart.forEach((item, index) => {
+	            let totalItemPrice = item.price * item.stock; // 개별 상품 총 가격
+	            totalPrice += totalItemPrice; // 전체 가격 합산
+	
+	            let row = document.createElement("tr");
+	            row.innerHTML = `
+	            	<td>${item.product_id}</td>
+	            	<td>${item.name}</td>
+	                <td>${item.price.toLocaleString()} 원</td>
+	                <td>
+	                    <button onclick="changeQuantity(${index}, -1)">➖</button>
+	                    ${item.stock}
+	                    <button onclick="changeQuantity(${index}, 1)">➕</button>
+	                </td>
+	                <td>${totalItemPrice.toLocaleString()} 원</td>
+	                <td><button onclick="removeItem(${index})">❌ 삭제</button></td>
+	            `;
+	            cartTable.appendChild(row);
+	        });
+	    }
+	
+	    totalPriceElement.textContent = totalPrice.toLocaleString(); // 총 가격 업데이트
+	}
+	
+	// 수량 변경 함수
+	function changeQuantity(index, delta) {
+	    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+	
+	    if (cart[index].stock + delta > 0) {
+	        cart[index].stock += delta;
+	        localStorage.setItem("cart", JSON.stringify(cart)); // 변경된 데이터 저장
+	        renderCart(); // UI 업데이트
+	    }
+	}
+	
+	// 상품 삭제 함수
+	function removeItem(index) {
+	    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+	    cart.splice(index, 1); // 해당 상품 삭제
+	    localStorage.setItem("cart", JSON.stringify(cart)); // 변경된 장바구니 저장
+	    renderCart(); // UI 업데이트
+	}
+	
+	// 주문 테이블에 넣기 위한 비동기동작 코드
+	document.querySelector("#orderBasket").addEventListener("click", sendOrder);
+
+    function sendOrder() {
+    	//alert(1111);
+    	fetch("/api/chksession") // 세션 확인 API
+	    .then(response => response.json())
+	    .then(data => {
+	        if (!data.loggedIn) {
+	            alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
+	            window.location.href = "/login"; // 로그인 페이지로 이동
+	            return;
+	        }
+	        
+	        // ✅ 로그인 상태이면 주문 실행
+	       	order_ok = confirm("주문하시겠습니까?");
+	        if(order_ok) {
+	        	processOrder();
+	        }
+	    })
+	    .catch(error => {
+	        console.error("세션 확인 오류:", error);
+	        alert("서버 오류가 발생했습니다.");
+	    });
+    	        
+    }
+    
+    function processOrder() {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        if (cart.length === 0) {
+            alert("장바구니가 비어 있습니다.");
+            return;
+        }
+
+        let orderData = { items: cart };
+
+        fetch("/api/order", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(orderData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("주문이 완료되었습니다.");
+                localStorage.removeItem("cart"); // 장바구니 비우기
+                window.location.href = "/orderlist"; // 주문 목록 페이지로 이동
+            } else {
+                alert("주문에 실패했습니다.");
+            }
+        })
+        .catch(error => {
+            console.error("주문 오류:", error);
+            alert("서버 오류가 발생했습니다.");
+        });
+    }
+</script>
+
+</body>
+
+</html>

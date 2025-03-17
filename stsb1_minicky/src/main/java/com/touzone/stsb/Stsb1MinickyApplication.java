@@ -9,5 +9,5 @@ public class Stsb1MinickyApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(Stsb1MinickyApplication.class, args);
 	}
-
+	
 }

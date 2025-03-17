@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="utf-8">
@@ -43,20 +43,20 @@
   <header id="header" class="fixed-top header-inner-pages">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="index.jsp">Mini Cookie</a></h1>
+      <h1 class="logo me-auto"><a href="/">Mini Cookie</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto active" href="/">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
           <li><a class="nav-link scrollto" href="#services">Services</a></li>
           <li><a class="nav-link   scrollto" href="#portfolio">Smart Shop</a></li>
           <li><a class="nav-link scrollto" href="#team">Consultant</a></li>
-          <li class="dropdown"><a href="boardlist.jsp"><span>Customer Center</span> <i class="bi bi-chevron-down"></i></a>
+          <li class="dropdown"><a href="boardlist"><span>Customer Center</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="boardlist.jsp">공지사항</a></li>        
+              <li><a href="boardlist">공지사항</a></li>        
               <li><a href="#">News</a></li>
               <li><a href="#">포토갤러리</a></li>
               <li><a href="#">자료실</a></li>
@@ -64,12 +64,13 @@
           </li>
           <li class="dropdown"><a href="#"><span>MyPage</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="regform.jsp">회원가입</a></li>              
-              <li><a href="loginform.jsp">로그인</a></li>
+              <li><a href="reg">회원가입</a></li>              
+              <li><a href="login">로그인</a></li>
               <li><a href="#">ID/PW찾기</a></li>
-              <li><a href="memupform.jsp">회원정보수정</a></li>
-              <li><a href="withdraw.jsp">회원탈퇴</a></li>
-              <li><a href="#">주문목록</a></li>
+              <li><a href="memupform">회원정보수정</a></li>
+              <li><a href="withdraw">회원탈퇴</a></li>
+              <li><a href="#">장바구니</a></li>
+              <li><a href="orderlist">주문목록</a></li>
             </ul>
           </li>
           <li><a class="getstarted scrollto" href="#about">Get Started</a></li>

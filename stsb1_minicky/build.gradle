@@ -2,6 +2,18 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.9'
 	id 'io.spring.dependency-management' version '1.1.6'
+	id 'war'  // war 1-플러그인 추가
+}
+
+bootWar {
+    enabled = true // 2-WAR로 패키징 활성화
+	archiveBaseName = 'ROOT'
+    archiveFileName = 'ROOT.war'
+    archiveVersion = "0.0.0"
+}
+
+bootJar {
+    enabled = false // JAR로 패키징 비활성화
 }
 
 group = 'com.touzone.stsb'
@@ -20,11 +32,21 @@ repositories {
 dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-devtools'
+	
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+	implementation 'mysql:mysql-connector-java:8.0.33'
 
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	
+	// 3-내장 톰캣을 'provided'로 설정
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'  
+	
+	tasks.withType(JavaCompile) {
+    options.compilerArgs << '-parameters' }
 }
 
 tasks.named('test') {

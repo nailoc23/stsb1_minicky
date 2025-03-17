@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- mapper DTD 선언 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- SQL Mapping -->
+<mapper namespace="ProductImageDao">  
+
+	<insert id="insertProductImage" parameterType="com.touzone.stsb.vo.ProductImageVo">
+  		INSERT INTO product_images
+		(image_id, product_id, 
+		 orgin_name, uuid_name, file_path, upload_date) values
+		((SELECT IFNULL(MAX(image_id), 0) + 1 FROM product_images as image_id), #{product_id}, 
+		 #{orgin_name}, #{uuid_name}, #{file_path}, now() )
+  	</insert>
+  	
+  	<delete id="deleteProductImg"  parameterType="java.lang.Integer">
+  		DELETE FROM product_images WHERE product_id =#{product_id}
+  	</delete>
+  	
+</mapper>

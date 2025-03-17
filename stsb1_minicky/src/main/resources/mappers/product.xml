@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- mapper DTD 선언 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- SQL Mapping -->
+<mapper namespace="ProductDao">  
+
+	<select id="selectProductById" parameterType="java.lang.Integer" resultType="com.touzone.stsb.vo.ProductVo">	 		
+ 		SELECT 
+		    p.*,
+		    pi.image_id, 
+		    IFNULL(pi.origin_name, 'default.jpg') AS origin_name, -- NULL이면 기본값 설정
+			IFNULL(pi.file_path, '/upload/default.jpg') AS file_path -- NULL이면 기본 경로 설정
+		FROM products p
+		LEFT JOIN product_images pi 
+		ON p.product_id = pi.product_id
+		WHERE p.product_id = #{product_id}  <!--  특정 상품 ID를 조회 -->
+ 	</select>
+ 	
+ 	<select id="selectProductList" resultType="com.touzone.stsb.vo.ProductVo">
+ 		SELECT 
+		    p.*,
+		    pi.image_id, 
+		    pi.origin_name, 
+		    pi.file_path
+		FROM products p
+		LEFT JOIN product_images pi 
+		ON p.product_id = pi.product_id		
+ 		ORDER BY p.product_id DESC
+ 	</select>
+ 	
+ 	<select id="getMaxProductId" resultType="java.lang.Integer">
+ 		SELECT MAX(product_id)+1 as product_id FROM products
+ 	</select>
+ 	
+ 	<insert id="insertProductOne" parameterType="com.touzone.stsb.vo.ProductVo">
+  		INSERT INTO products
+		(product_id, name, category, price, stock, regdate) values
+		(#{product_id}, #{name}, #{category}, #{price}, #{stock}, now() )
+  	</insert>
+  	<!--  ( SELECT MAX(product_id)+1 FROM products as product_id ) -->
+  	
+  	<update id="updateProductOne" parameterType="com.touzone.stsb.vo.ProductVo">
+  		UPDATE products 
+  		SET name = #{name}, category=#{category},
+  		price = #{price}, stock=#{stock}
+  		WHERE product_id = #{product_id} 	
+  	</update>
+</mapper>   
